@@ -97,7 +97,7 @@ public class HomeController {
 
     @GetMapping("/shop")
     public ModelAndView showCreateProduct() {
-        ModelAndView modelAndView = new ModelAndView("/bang");
+        ModelAndView modelAndView = new ModelAndView("/shop");
         modelAndView.addObject("products", productService.findAll());
         return modelAndView;
     }
