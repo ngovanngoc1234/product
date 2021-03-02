@@ -1,46 +1,30 @@
 package com.example.demo.controllers;
-import com.example.demo.model.Cart;
 import com.example.demo.model.Product;
-import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import com.example.demo.model.Product;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
-import com.example.demo.service.product.ProductService;
 import com.example.demo.service.role.IRoleService;
 import com.example.demo.service.user.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
 @Controller
-public class SecurityController {
+public class HomeController {
 
 //    @Value("${upload.path}")
 //    private String fileUpload;
+
+
     @Autowired
     IUserService userService;
 
@@ -110,18 +94,13 @@ public class SecurityController {
         return "login";
     }
 
+
     @GetMapping("/shop")
-    public ModelAndView bang() {
-        Iterable<Product> products = productService.findAll();
-        ModelAndView model = new ModelAndView("shop", "products", products);
-        return model;
+    public ModelAndView showCreateProduct() {
+        ModelAndView modelAndView = new ModelAndView("/bang");
+        modelAndView.addObject("products", productService.findAll());
+        return modelAndView;
     }
-//    @GetMapping("/bang")
-//    public ModelAndView showCreateProduct() {
-//        ModelAndView modelAndView = new ModelAndView("/bang");
-//        modelAndView.addObject("products", productService.findAll());
-//        return modelAndView;
-//    }
 
 
 
@@ -156,15 +135,15 @@ public class SecurityController {
 
     @PostMapping("/create")
     public ModelAndView postCreate(@ModelAttribute("products") Product product) {
-        MultipartFile multipartFile = product.getImage();
-        String fileName = multipartFile.getOriginalFilename();
-
-//        try {
-//            FileCopyUtils.copy(product.getImage().getBytes(), new File(fileUpload + fileName));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        product.setImgSrc(fileName);
+//        MultipartFile multipartFile = product.getImage();
+//        String fileName = multipartFile.getOriginalFilename();
+//
+////        try {
+////            FileCopyUtils.copy(product.getImage().getBytes(), new File(fileUpload + fileName));
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+//        product.setImgSrc(fileName);
         productService.save(product);
         ModelAndView modelAndView = new ModelAndView("/create");
         modelAndView.addObject("products", new Product());
