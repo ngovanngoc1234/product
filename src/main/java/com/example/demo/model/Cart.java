@@ -16,7 +16,6 @@ public class Cart {
     }
 
 
-
     public Order_Session getOrderSession(Product product){
         for(Order_Session orderSession : orderSessions)
         {

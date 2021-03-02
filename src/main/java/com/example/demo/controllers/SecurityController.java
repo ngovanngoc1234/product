@@ -35,11 +35,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 @Controller
 public class SecurityController {
 
-    @Value("${upload.path}")
-    private String fileUpload;
+//    @Value("${upload.path}")
+//    private String fileUpload;
     @Autowired
     IUserService userService;
 
@@ -109,10 +110,10 @@ public class SecurityController {
         return "login";
     }
 
-    @GetMapping("/bang")
+    @GetMapping("/shop")
     public ModelAndView bang() {
         Iterable<Product> products = productService.findAll();
-        ModelAndView model = new ModelAndView("bang", "products", products);
+        ModelAndView model = new ModelAndView("shop", "products", products);
         return model;
     }
 //    @GetMapping("/bang")
@@ -127,10 +128,10 @@ public class SecurityController {
     @GetMapping("/delete")
     public String delete(@RequestParam Long id) {
         if (id == null) {
-            return "redirect:/bang";
+            return "redirect:/shop";
         }
         productService.delete(id);
-        return "redirect:/bang";
+        return "redirect:/shop";
     }
 
     @GetMapping("/delete/{id}")
@@ -138,7 +139,7 @@ public class SecurityController {
         Product product = productService.finById(id);
         productService.delete(product.getId());
         Iterable<Product> products = productService.findAll();
-        ModelAndView modelAndView = new ModelAndView("bang");
+        ModelAndView modelAndView = new ModelAndView("shop");
         modelAndView.addObject("products", products);
         return modelAndView;
     }
@@ -158,11 +159,11 @@ public class SecurityController {
         MultipartFile multipartFile = product.getImage();
         String fileName = multipartFile.getOriginalFilename();
 
-        try {
-            FileCopyUtils.copy(product.getImage().getBytes(), new File(fileUpload + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            FileCopyUtils.copy(product.getImage().getBytes(), new File(fileUpload + fileName));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         product.setImgSrc(fileName);
         productService.save(product);
         ModelAndView modelAndView = new ModelAndView("/create");

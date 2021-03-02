@@ -28,7 +28,7 @@ public class ProductController {
 
     @GetMapping("/list")
     public ModelAndView showAllProduct() {
-        ModelAndView modelAndView = new ModelAndView("/bang");
+        ModelAndView modelAndView = new ModelAndView("/shop");
        Iterable<Product> product = productService.findAll();
         modelAndView.addObject("products", product);
         return modelAndView;
@@ -40,8 +40,6 @@ public class ProductController {
         productService.save(product);
         return "redirect:/";
     }
-
-
 
 
     @GetMapping("/findOne")
